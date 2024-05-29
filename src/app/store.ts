@@ -22,6 +22,7 @@ export interface UserObject {
 }
 
 type UserStore = {
+  userList: () => Promise<void>;
   user: UserObject;
   dialogOpened: boolean;
   handleDialog: () => void;
@@ -29,6 +30,17 @@ type UserStore = {
 };
 
 export const useStoreUser = create<UserStore>((set) => ({
+  userList: async () => {
+    const data = await fetch("https://jsonplaceholder.typicode.com/users").then(
+      (response) => response.json()
+    );
+
+    return data;
+    // .then(async (json) => {
+    //   const data = await json.json();
+    //   return set(() => ({ userList: data }));
+    // });
+  },
   user: {
     id: 0,
     name: "",

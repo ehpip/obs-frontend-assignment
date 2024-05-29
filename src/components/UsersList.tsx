@@ -13,8 +13,9 @@ type UsersListProps = {
 };
 
 const UsersList: React.FC<UsersListProps> = ({ data }) => {
-  const dialog = useStoreUser((state) => state.dialogOpened);
-  const User = useStoreUser((state) => state.user);
+  const User = useStoreUser((state) => state.userList);
+
+  console.log(User);
 
   const handleDialog = useStoreUser((state) => state.handleDialog);
   const handleUser = useStoreUser((state) => state.selectUser);
