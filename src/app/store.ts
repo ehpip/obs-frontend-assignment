@@ -29,6 +29,7 @@ type UserStore = {
   selectUser: (user: UserStore["user"]) => void;
   setUsers: (userList: UserStore["userList"]) => void;
   deleteUser: (userList: UserStore["userList"]) => void;
+  addUser: (userList: UserStore["userList"]) => void;
 };
 
 export const useStoreUser = create<UserStore>((set) => ({
@@ -50,9 +51,13 @@ export const useStoreUser = create<UserStore>((set) => ({
   dialogOpened: false,
   handleDialog: () => set((state) => ({ dialogOpened: !state.dialogOpened })),
   selectUser: (User) => set(() => ({ user: User })),
-  setUsers: (User: any) => set(() => ({ userList: User })),
-  deleteUser: (User: any) =>
+  setUsers: (User) => set(() => ({ userList: User })),
+  deleteUser: (User) =>
     set((state) => ({
       userList: state.userList.filter((e: any) => e !== User),
+    })),
+  addUser: (User) =>
+    set((state) => ({
+      userList: state.userList.push(User),
     })),
 }));
