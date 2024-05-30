@@ -1,21 +1,23 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 
 "use client";
 
 import { UserObject, useStoreUser } from "@/app/store";
-import { Card, CardContent, CardMedia, Chip } from "@mui/material";
-import React from "react";
+import { useEffect } from "react";
 import DialogUser from "./DialogUser";
+import { Card, CardContent, CardMedia, Chip } from "@mui/material";
+import AddUser from "./AddUser";
 
-// Define the props for the UsersList component
-type UsersListProps = {
-  data: UserObject[];
-};
+const UsersList = () => {
+  const setUsers = useStoreUser((state) => state.setUsers);
+  const userList = useStoreUser((state) => state.userList);
 
-const UsersList: React.FC<UsersListProps> = ({ data }) => {
-  const User = useStoreUser((state) => state.userList);
-
-  console.log(User);
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => response.json())
+      .then((json) => setUsers(json));
+  }, []);
 
   const handleDialog = useStoreUser((state) => state.handleDialog);
   const handleUser = useStoreUser((state) => state.selectUser);
@@ -24,10 +26,11 @@ const UsersList: React.FC<UsersListProps> = ({ data }) => {
     <div className="w-full flex justify-center p-5 md:p-10 mt-20">
       <div className="max-w-7xl flex w-full items-center">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 md:gap-10 w-full">
-          <p className="sm:col-span-2 md:col-span-3 font-semibold text-3xl">
-            User List
-          </p>
-          {data.map((user: UserObject, index: React.Key) => {
+          <div className="flex justify-between sm:col-span-2 md:col-span-3 ">
+            <p className="font-semibold text-3xl">User List</p>
+            <AddUser />
+          </div>
+          {userList.map((user: UserObject, index: React.Key) => {
             return (
               <button
                 key={index}
@@ -51,9 +54,12 @@ const UsersList: React.FC<UsersListProps> = ({ data }) => {
                           <img src="https://picsum.photos/720" alt="image" />
                         </div>
                       </div>
-                      <p className="font-medium text-xl">{user.name}</p>
+                      <p className="font-medium text-xl text-start">
+                        {user.name}
+                      </p>
                       <Chip label={user.username} />
                     </div>
+
                     <p className="lowercase text-slate-500 text-start">
                       {user.email}
                     </p>

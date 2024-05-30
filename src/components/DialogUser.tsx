@@ -1,16 +1,30 @@
 import { useStoreUser } from "@/app/store";
-import { Dialog, DialogTitle } from "@mui/material";
+import { Dialog, DialogTitle, IconButton, Tooltip } from "@mui/material";
 import Link from "next/link";
+import { FaTrash } from "react-icons/fa";
 
 const DialogUser = () => {
   const open = useStoreUser((state) => state.dialogOpened);
   const user = useStoreUser((state) => state.user);
   const handleClose = useStoreUser((state) => state.handleDialog);
+  const deleteUser = useStoreUser((state) => state.deleteUser);
 
   return (
     <Dialog onClose={handleClose} open={open}>
       <div className="p-5">
-        <p className="text-xl font-medium">User&apos;s Details</p>
+        <div className="flex justify-between items-center">
+          <p className="text-xl font-medium">User&apos;s Details</p>
+          <Tooltip title="Delete User">
+            <IconButton
+              onClick={() => {
+                deleteUser(user);
+                handleClose();
+              }}
+            >
+              <FaTrash size={20} />
+            </IconButton>
+          </Tooltip>
+        </div>
         <div className="grid grid-cols-2 pt-2">
           <p>ID :</p>
           <p>{user.id}</p>

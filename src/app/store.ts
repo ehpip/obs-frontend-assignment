@@ -22,25 +22,17 @@ export interface UserObject {
 }
 
 type UserStore = {
-  userList: () => Promise<void>;
+  userList: any;
   user: UserObject;
   dialogOpened: boolean;
   handleDialog: () => void;
   selectUser: (user: UserStore["user"]) => void;
+  setUsers: (userList: UserStore["userList"]) => void;
+  deleteUser: (userList: UserStore["userList"]) => void;
 };
 
 export const useStoreUser = create<UserStore>((set) => ({
-  userList: async () => {
-    const data = await fetch("https://jsonplaceholder.typicode.com/users").then(
-      (response) => response.json()
-    );
-
-    return data;
-    // .then(async (json) => {
-    //   const data = await json.json();
-    //   return set(() => ({ userList: data }));
-    // });
-  },
+  userList: [],
   user: {
     id: 0,
     name: "",
@@ -58,4 +50,9 @@ export const useStoreUser = create<UserStore>((set) => ({
   dialogOpened: false,
   handleDialog: () => set((state) => ({ dialogOpened: !state.dialogOpened })),
   selectUser: (User) => set(() => ({ user: User })),
+  setUsers: (User: any) => set(() => ({ userList: User })),
+  deleteUser: (User: any) =>
+    set((state) => ({
+      userList: state.userList.filter((e: any) => e !== User),
+    })),
 }));
