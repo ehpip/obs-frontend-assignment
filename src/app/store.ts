@@ -58,6 +58,6 @@ export const useStoreUser = create<UserStore>((set) => ({
     })),
   addUser: (User) =>
     set((state) => ({
-      userList: state.userList.push(User),
+      userList: [...state.userList, User],
     })),
 }));
