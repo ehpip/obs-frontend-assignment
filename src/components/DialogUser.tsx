@@ -43,9 +43,7 @@ const DialogUser = () => {
           <p>Company :</p>
           <p>{user.company.name}</p>
           <p>Address :</p>
-          <p>
-            {user.address.street} {user.address.suite}
-          </p>
+          <p>{user.address.street}</p>
           <p>City :</p>
           <p>{user.address.city}</p>
         </div>

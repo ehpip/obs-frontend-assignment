@@ -68,29 +68,6 @@ const AddUser = () => {
         bs: "harness real-time e-markets",
       },
     });
-    console.log({
-      id: data.id,
-      name: data.name,
-      username: data.username,
-      email: data.email,
-      address: {
-        street: data.address,
-        suite: "Apt. 556",
-        city: data.city,
-        zipcode: "92998-3874",
-        geo: {
-          lat: "-37.3159",
-          lng: "81.1496",
-        },
-      },
-      phone: data.phone,
-      website: data.website,
-      company: {
-        name: data.company,
-        catchPhrase: "Multi-layered client-server neural-net",
-        bs: "harness real-time e-markets",
-      },
-    });
     reset();
     handleClose();
   });
